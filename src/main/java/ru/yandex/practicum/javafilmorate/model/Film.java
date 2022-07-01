@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Film {
 
-    private int id;
+    private long id;
     //название не может быть пустым;
     @NotBlank
     private String name;

@@ -22,8 +22,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private Map<Integer, Film> films = new HashMap<>();
-    private int idgenerator;
+    private Map<Long, Film> films = new HashMap<>();
+    private long idgenerator;
 
     private void validateFilm(Film film) {
         // дата релиза — не раньше 28 декабря 1895 года;
@@ -35,19 +35,18 @@ public class FilmController {
     //добавление фильма;
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {
-        log.info("Получен запрос на создание фильма");
+        log.info("Фильм: " + film.getName() + " создан с id: " + film.getId());
         ++idgenerator;
         film.setId(idgenerator);
         validateFilm(film);
         films.put(idgenerator, film);
-        System.out.println(film);
         return film;
     }
 
     //обновление фильма;
     @PutMapping
     public Film update(@RequestBody @Valid Film film) {
-        log.info("Получен запрос на обновление фильма");
+        log.info("Фильм: " + film.getName() + " обнавлен с id: " + film.getId());
         if (film.getId() < 0) {
             throw new ValidationException("Отрицательное значение id");
         }

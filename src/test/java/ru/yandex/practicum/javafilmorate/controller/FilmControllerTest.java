@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 //Класс тестирует контроллер FilmController
-@SpringBootTest
+
 class FilmControllerTest {
     private FilmController controller = new FilmController();
 

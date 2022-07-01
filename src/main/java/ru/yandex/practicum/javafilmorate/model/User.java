@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @ToString
 public class User {
     //должен быть положительным
-    private int id;
+    private long id;
     //электронная почта не может быть пустой и должна содержать символ @
     private String email;
     //логин не может быть пустым и содержать пробелы;

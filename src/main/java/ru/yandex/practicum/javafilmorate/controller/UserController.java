@@ -24,22 +24,22 @@ import java.util.Map;
 @RequestMapping("/users")
 
 public class UserController {
-    private Map<Integer, User> users = new HashMap<>();
-    private int idgenerator;
+    private Map<Long, User> users = new HashMap<>();
+    private long idgenerator;
 
-    private void validate(User user) {
+    private void validateUser(User user) {
         //электронная почта не может быть пустой и должна содержать символ @
         String userEmail = user.getEmail();
         boolean mailFormat = userEmail.contains("@");
         if (userEmail.isEmpty() || !mailFormat) {
-            log.info("почта имеет ошибку");
+            log.info("почта для пользователя " + user.getName() + " c id: " + user.getId() + " имеет ошибку");
             throw new ValidationException("электронная почта не может быть пустой и должна содержать символ @");
         }
         //логин не может быть пустым и содержать пробелы;
         String userLogin = user.getLogin();
         boolean loginFormat = userLogin.contains(" ");
         if (userLogin.isBlank() || loginFormat) {
-            log.info("логин имеет ошибку");
+            log.info("логин имеет ошибку у пользователя " + user.getName() + " c id " + user.getId());
             throw new ValidationException("логин не может быть пустым и содержать пробелы");
         }
         //имя для отображения может быть пустым — в таком случае будет использован логин;
@@ -57,10 +57,10 @@ public class UserController {
     //создание пользователя;
     @PostMapping
     public User create(@RequestBody User user) {
-        log.info("Получен запрос на создание пользователя");
+        log.info("Пользователь " + user.getName() + " id " + user.getId() + " добавлен");
         ++idgenerator;
         user.setId(idgenerator);
-        validate(user);
+        validateUser(user);
         users.put(user.getId(), user);
         return user;
     }
@@ -68,12 +68,12 @@ public class UserController {
     //обновление пользователя;
     @PutMapping
     public User update(@RequestBody @Valid User user) {
-        log.info("Получен запрос на обновление пользователя");
-        int userId = user.getId();
+        log.info("Пользователь " + user.getName() + " id " + user.getId() + " обнавлен");
+        long userId = user.getId();
         if (userId < 0 && !users.containsKey(userId)) {
             throw new ValidationException("Такого id нет");
         }
-        validate(user);
+        validateUser(user);
         users.put(user.getId(), user);
         return user;
     }
@@ -83,6 +83,5 @@ public class UserController {
     public ArrayList<User> getAllUsers() {
         log.info("Получен запрос на получение списка всех пользователей");
         return new ArrayList<>(users.values());
-
     }
 }
