@@ -44,12 +44,12 @@ public class UserController {
         }
         //имя для отображения может быть пустым — в таком случае будет использован логин;
         String userName = user.getName();
-        if(userName.isEmpty()){
+        if (userName.isEmpty()) {
             user.setName(userLogin);
         }
 
         // дата рождения не может быть в будущем.
-        if(user.getBirthday().isAfter(LocalDate.now())){
+        if (user.getBirthday().isAfter(LocalDate.now())) {
             throw new ValidationException("дата рождения не может быть в будущем.");
         }
     }
@@ -70,7 +70,7 @@ public class UserController {
     public User update(@RequestBody @Valid User user) {
         log.info("Получен запрос на обновление пользователя");
         int userId = user.getId();
-        if(userId<0 && !users.containsKey(userId)){
+        if (userId < 0 && !users.containsKey(userId)) {
             throw new ValidationException("Такого id нет");
         }
         validate(user);

@@ -25,22 +25,22 @@ public class FilmController {
     private Map<Integer, Film> films = new HashMap<>();
     private int idgenerator;
 
-   private void validateFilm(Film film){
-       // дата релиза — не раньше 28 декабря 1895 года;
-       if(film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
-           throw new ValidationException("дата релиза — не раньше 28 декабря 1895 года;");
-       }
-   }
+    private void validateFilm(Film film) {
+        // дата релиза — не раньше 28 декабря 1895 года;
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+            throw new ValidationException("дата релиза — не раньше 28 декабря 1895 года;");
+        }
+    }
 
     //добавление фильма;
-     @PostMapping
+    @PostMapping
     public Film create(@RequestBody @Valid Film film) {
-         log.info("Получен запрос на создание фильма");
-         ++idgenerator;
-         film.setId(idgenerator);
-         validateFilm(film);
+        log.info("Получен запрос на создание фильма");
+        ++idgenerator;
+        film.setId(idgenerator);
+        validateFilm(film);
         films.put(idgenerator, film);
-         System.out.println(film);
+        System.out.println(film);
         return film;
     }
 
@@ -48,15 +48,15 @@ public class FilmController {
     @PutMapping
     public Film update(@RequestBody @Valid Film film) {
         log.info("Получен запрос на обновление фильма");
-       if(film.getId()<0){
-           throw new ValidationException("Отрицательное значение id");
-       }
-       validateFilm(film);
+        if (film.getId() < 0) {
+            throw new ValidationException("Отрицательное значение id");
+        }
+        validateFilm(film);
         films.put(film.getId(), film);
         return film;
     }
 
-//    получение всех фильмов
+    //    получение всех фильмов
     @GetMapping
     ArrayList getFilms() {
         log.info("Получен запрос на получение списка всех фильмов");
