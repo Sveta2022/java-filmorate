@@ -2,8 +2,9 @@ package ru.yandex.practicum.javafilmorate.model;
 
 import lombok.*;
 
-import javax.validation.constraints.*;
 import java.time.LocalDate;
+
+//Класс описывает пользователя
 
 @Getter
 @Setter

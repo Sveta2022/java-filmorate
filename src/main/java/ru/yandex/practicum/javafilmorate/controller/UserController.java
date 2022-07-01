@@ -1,8 +1,6 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.User;
@@ -14,6 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+Класс контроллер описывает эндпоинты для класса User:
+ - создание пользователя;
+ - обновление пользователя;
+ - получение списка всех пользователей.
+ */
 
 @Slf4j
 @RestController
@@ -21,7 +25,7 @@ import java.util.Map;
 
 public class UserController {
     private Map<Integer, User> users = new HashMap<>();
-    private static int idgenerator;
+    private int idgenerator;
 
     private void validate(User user) {
         //электронная почта не может быть пустой и должна содержать символ @
@@ -46,7 +50,7 @@ public class UserController {
 
         // дата рождения не может быть в будущем.
         if(user.getBirthday().isAfter(LocalDate.now())){
-            throw new RuntimeException("дата рождения не может быть в будущем.");
+            throw new ValidationException("дата рождения не может быть в будущем.");
         }
     }
 

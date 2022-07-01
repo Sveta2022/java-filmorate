@@ -1,8 +1,6 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.Film;
@@ -13,11 +11,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+Класс контроллер описывает эндпоинты для класса Film:
+ - добавление фильма;
+ - обновление фильма;
+ - получение всех фильмов.
+ */
+
 @Slf4j
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private Map<Integer, Film> films;
+    private Map<Integer, Film> films = new HashMap<>();
     private int idgenerator;
 
    private void validateFilm(Film film){
@@ -34,7 +39,6 @@ public class FilmController {
          ++idgenerator;
          film.setId(idgenerator);
          validateFilm(film);
-         films = new HashMap<>();
         films.put(idgenerator, film);
          System.out.println(film);
         return film;
