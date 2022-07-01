@@ -11,18 +11,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class User {
-
     //должен быть положительным
-    int id;
+    private int id;
     //электронная почта не может быть пустой и должна содержать символ @
-    String email;
-
+    private String email;
     //логин не может быть пустым и содержать пробелы;
-    String login;
-
+    private String login;
     //имя для отображения может быть пустым — в таком случае будет использован логин;
-    String name;
-
+    private String name;
     // дата рождения не может быть в будущем.
-    LocalDate birthday;
+    private LocalDate birthday;
 }

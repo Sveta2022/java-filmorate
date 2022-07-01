@@ -1,5 +1,6 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
+@Slf4j
 @RestController
 @RequestMapping("/users")
 
 public class UserController {
     private Map<Integer, User> users = new HashMap<>();
-    private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private static int idgenerator;
 
     private void validate(User user) {
@@ -50,7 +50,7 @@ public class UserController {
         }
     }
 
-    //    создание пользователя;
+    //создание пользователя;
     @PostMapping
     public User create(@RequestBody User user) {
         log.info("Получен запрос на создание пользователя");
@@ -61,7 +61,7 @@ public class UserController {
         return user;
     }
 
-    //    обновление пользователя;
+    //обновление пользователя;
     @PutMapping
     public User update(@RequestBody @Valid User user) {
         log.info("Получен запрос на обновление пользователя");
@@ -74,12 +74,11 @@ public class UserController {
         return user;
     }
 
-    //    получение списка всех пользователей
+    //получение списка всех пользователей
     @GetMapping
     public ArrayList<User> getAllUsers() {
         log.info("Получен запрос на получение списка всех пользователей");
         return new ArrayList<>(users.values());
 
     }
-
 }
