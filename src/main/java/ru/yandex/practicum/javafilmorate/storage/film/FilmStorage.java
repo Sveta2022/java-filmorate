@@ -9,14 +9,11 @@ import java.util.Map;
 
 @Component
 public interface FilmStorage {
-
     Map<Long, Film> films = new HashMap<>();
 
     Film create(Film film);
 
-
     Film update(Film film);
 
-
-    ArrayList getFilms();
+    ArrayList <Film> getFilms();
 }

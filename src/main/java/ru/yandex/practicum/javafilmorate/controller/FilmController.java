@@ -29,12 +29,6 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-//    private void validateFilm(Film film) {
-//        // дата релиза — не раньше 28 декабря 1895 года;
-//
-//        filmStorage.validateFilm(film);
-//    }
-
     //добавление фильма;
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {
@@ -52,4 +46,11 @@ public class FilmController {
     ArrayList getFilms() {
         return filmService.getFilms();
     }
+
+    @GetMapping("/{id}")
+    public Film getFilmById(@PathVariable long id){
+        return filmService.getFilmById(id);
+    }
+
+
 }

@@ -5,9 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.Film;
+import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.film.FilmStorage;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 Класс отвечает за операции с фильмами, — добавление и удаление лайка, вывод 10 наиболее популярных
@@ -55,5 +60,35 @@ public class FilmService {
         log.info("Получен запрос на получение списка всех фильмов");
         return filmStorage.getFilms();
     }
+
+    public Film getFilmById(long id){
+        log.info("Получен запрос на поиск фильма с id: " + id);
+       Optional<Film> filmById = filmStorage.getFilms().stream().
+               filter(film->film.getId() == id).findFirst();
+       if(filmById.isPresent()){
+           return filmById.get();
+       } else {
+           throw new ValidationException("Фильма с таким id нет в списке");
+       }
+    }
+
+    public void addLike(User user, Film film){
+        long id = user.getId();
+        film.getLikes().add(id);
+    }
+
+    public void removeLike (User user, Film film){
+        long id = user.getId();
+        film.getLikes().remove(id);
+    }
+
+    public Set<Film> topTenFilm(){
+        ArrayList<Film> films = filmStorage.getFilms();
+        Set<Film> collect = films.stream().sorted(Comparator.comparingInt(x -> x.getLikes().size()))
+                .limit(10).collect(Collectors.toSet());
+        return collect;
+    }
+
+
 
 }

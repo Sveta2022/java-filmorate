@@ -11,8 +11,11 @@ import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
 
 import javax.validation.Valid;
+import java.security.cert.Certificate;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /*
 добавление в друзья, удаление из друзей, вывод списка общих друзей
@@ -81,4 +84,23 @@ public class UserService {
     public ArrayList<User> getAllUsers() {
         return userStorage.getAllUsers();
     }
+
+    public void addFriends(User user, User userFriend){
+        long id = user.getId();
+        long idFriend = userFriend.getId();
+        user.getFriends().add(idFriend);
+        userFriend.getFriends().add(id);
+
+    }
+
+    public void removeFriends(User user, User userFriend){
+        long id = user.getId();
+        long idFriend = userFriend.getId();
+        user.getFriends().remove(idFriend);
+        userFriend.getFriends().remove(id);
+    }
+    public Set<Long> commonFriends(User user){
+        return user.getFriends();
+    }
+
 }

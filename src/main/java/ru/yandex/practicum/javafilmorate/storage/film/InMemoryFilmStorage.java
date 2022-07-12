@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.model.Film;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -28,7 +26,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public ArrayList getFilms() {
+    public ArrayList <Film> getFilms() {
         return new ArrayList<>(films.values());
     }
 }
