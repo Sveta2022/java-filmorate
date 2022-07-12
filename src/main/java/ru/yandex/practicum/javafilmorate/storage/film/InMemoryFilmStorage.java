@@ -10,8 +10,7 @@ import java.util.ArrayList;
 
 @Component
 @Slf4j
-@Getter
-@Setter
+
 public class InMemoryFilmStorage implements FilmStorage {
 
     @Override

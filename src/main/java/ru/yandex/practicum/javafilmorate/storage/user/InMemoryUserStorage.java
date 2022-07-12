@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 @Component
 @Slf4j
-@Getter
-@Setter
 public class InMemoryUserStorage implements UserStorage {
 
     //создание пользователя;
@@ -34,7 +32,6 @@ public class InMemoryUserStorage implements UserStorage {
     //получение списка всех пользователей
     @Override
     public ArrayList<User> getAllUsers() {
-        log.info("Получен запрос на получение списка всех пользователей");
         return new ArrayList<>(users.values());
     }
 
