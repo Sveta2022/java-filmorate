@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
 
@@ -34,59 +33,60 @@ public class UserService {
         return userStorage.create(user);
     }
 
-    //обновление пользователя;
+    //обновленить пользователя;
 
     public User update(User user) {
 
         return userStorage.update(user);
     }
 
-    public User getUserById(long id){
-        Optional<User> userById = getAllUsers().stream().
-                filter(user->user.getId() == id).findFirst();
-        if(userById.isPresent()){
-            return userById.get();
-        } else {
-            throw new NotFoundObjectException("Пользователя с таким id нет в списке");
-        }
+    public User getUserById(long id) {
+        return userStorage.getUserById(id);
     }
 
-    //получение списка всех пользователей
-
+    //полученить список всех пользователей
     public ArrayList<User> getAllUsers() {
         return userStorage.getAllUsers();
     }
 
-    public void addFriends(User user, User userFriend){
-        long id = user.getId();
-        long idFriend = userFriend.getId();
-        user.getFriends().add(idFriend);
-        userFriend.getFriends().add(id);
-
+    //добавить пользователя в друзья
+    public void addFriends(long userId, long friendId) {
+        User user = userStorage.getUserById(userId);
+        User friend = userStorage.getUserById(friendId);
+        user.getFriends().add(friend.getId());
+        friend.getFriends().add(userId);
+        update(user);
+        update(friend);
     }
 
-    public void removeFriends(User user, User userFriend){
-        long id = user.getId();
-        long idFriend = userFriend.getId();
-        user.getFriends().remove(idFriend);
-        userFriend.getFriends().remove(id);
+    //удалить пользователя из друзей
+    public void removeFriends(long userId, long friendId) {
+        User user = userStorage.getUserById(userId);
+        User friend = userStorage.getUserById(friendId);
+        user.getFriends().add(friend.getId());
+        friend.getFriends().add(userId);
+        update(user);
+        update(friend);
     }
-    public List<User> userfriends(User user){
-        System.out.println(user.getFriends());
+
+    //получить список друзей пользователя
+    public List<User> userfriends(long id) {
+        User user = getUserById(id);
         List<User> userFriends = new ArrayList<>();
-        user.getFriends().stream().forEach(e->userFriends.add(getUserById(e)));
+        user.getFriends().stream().forEach(e -> userFriends.add(getUserById(e)));
         return userFriends;
     }
 
-    public List<User> commonFriends(User user, User other){
+    //получить список общих друзей пользователя
+    public List<User> commonFriends(long idUser, long idOther) {
+        User user = userStorage.getUserById(idUser);
+        User otherUser = userStorage.getUserById(idOther);
         Set<Long> userFriends = user.getFriends();
-        Set<Long> otherFriends = other.getFriends();
+        Set<Long> otherFriends = otherUser.getFriends();
         List<User> commonUserFriends = new ArrayList<>();
         userFriends.stream()
                 .filter(otherFriends::contains)
-                .forEach(e->commonUserFriends.add(getUserById(e)));
+                .forEach(e -> commonUserFriends.add(getUserById(e)));
         return commonUserFriends;
-
     }
-
 }

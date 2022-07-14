@@ -4,16 +4,26 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.model.Film;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+/*
+Интерфейс определяет методы:
+- создать фильм
+- обновить фильм
+- получить список фильмов
+- получить фильм по id
+ */
 
 @Component
 public interface FilmStorage {
-    Map<Long, Film> films = new HashMap<>();
-
+    //создать фильм
     Film create(Film film);
 
+    //обновить фильм
     Film update(Film film);
 
-    ArrayList <Film> getFilms();
+    //получить список фильмов
+    ArrayList<Film> getFilms();
+
+    //получить фильм по id
+    public Film getFilmById(long id);
 }
