@@ -9,10 +9,9 @@ import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
 
 
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 добавление в друзья, удаление из друзей, вывод списка общих друзей
@@ -22,14 +21,16 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserService {
     UserStorage userStorage;
+    private long idgenerator;
 
     @Autowired
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
-
     public User create(User user) {
+        ++idgenerator;
+        user.setId(idgenerator);
         return userStorage.create(user);
     }
 
@@ -70,8 +71,22 @@ public class UserService {
         user.getFriends().remove(idFriend);
         userFriend.getFriends().remove(id);
     }
-    public Set<Long> commonFriends(User user){
-        return user.getFriends();
+    public List<User> userfriends(User user){
+        System.out.println(user.getFriends());
+        List<User> userFriends = new ArrayList<>();
+        user.getFriends().stream().forEach(e->userFriends.add(getUserById(e)));
+        return userFriends;
+    }
+
+    public List<User> commonFriends(User user, User other){
+        Set<Long> userFriends = user.getFriends();
+        Set<Long> otherFriends = other.getFriends();
+        List<User> commonUserFriends = new ArrayList<>();
+        userFriends.stream()
+                .filter(otherFriends::contains)
+                .forEach(e->commonUserFriends.add(getUserById(e)));
+        return commonUserFriends;
+
     }
 
 }

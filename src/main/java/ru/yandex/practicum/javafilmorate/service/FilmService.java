@@ -8,10 +8,9 @@ import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.storage.film.FilmStorage;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.Set;
+import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class FilmService {
     FilmStorage filmStorage;
+    private long idgenerator;
 
 
     @Autowired
@@ -31,6 +31,8 @@ public class FilmService {
     }
 
     public Film create(Film film) {
+        ++idgenerator;
+        film.setId(idgenerator);
         return filmStorage.create(film);
     }
 
@@ -54,20 +56,32 @@ public class FilmService {
        }
     }
 
-    public void addLike(User user, Film film){
-        long id = user.getId();
-        film.getLikes().add(id);
+    public void addLike(Film film, User user){
+        film.getLikes().add(user.getId());
+        System.out.println(film.getCountLike());
+        // TODO удалить
     }
 
-    public void removeLike (User user, Film film){
-        long id = user.getId();
-        film.getLikes().remove(id);
+    public void deleteLike (Film film, User user){
+        film.getLikes().remove(user.getId());
     }
 
-    public Set<Film> topTenFilm(){
+    public Set<Film> topTenFilm(String count){
         ArrayList<Film> films = filmStorage.getFilms();
-        Set<Film> collect = films.stream().sorted(Comparator.comparingInt(x -> x.getLikes().size()))
-                .limit(10).collect(Collectors.toSet());
+        Set<Film> collect = new HashSet<>();
+        if (count == null) {
+            films.stream()
+                    .limit(10).
+                    sorted(Comparator.comparingInt(Film::getCountLike).reversed())
+                    .forEach(collect::add);
+
+        } else {films.stream()
+                .limit(Integer.parseInt(count))
+                .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
+                .forEach(collect::add);
+        }
+        System.out.println(collect);
+        //TODO удалить
         return collect;
     }
 
