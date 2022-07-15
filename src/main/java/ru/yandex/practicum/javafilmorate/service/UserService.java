@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor
 public class UserService {
-    UserStorage userStorage;
+    private UserStorage userStorage;
     private long idgenerator;
 
     @Autowired
@@ -33,8 +33,7 @@ public class UserService {
         return userStorage.create(user);
     }
 
-    //обновленить пользователя;
-
+    //обновить пользователя;
     public User update(User user) {
 
         return userStorage.update(user);
@@ -44,7 +43,7 @@ public class UserService {
         return userStorage.getUserById(id);
     }
 
-    //полученить список всех пользователей
+    //получить список всех пользователей
     public ArrayList<User> getAllUsers() {
         return userStorage.getAllUsers();
     }
@@ -55,8 +54,6 @@ public class UserService {
         User friend = userStorage.getUserById(friendId);
         user.getFriends().add(friend.getId());
         friend.getFriends().add(userId);
-        update(user);
-        update(friend);
     }
 
     //удалить пользователя из друзей
@@ -65,8 +62,6 @@ public class UserService {
         User friend = userStorage.getUserById(friendId);
         user.getFriends().add(friend.getId());
         friend.getFriends().add(userId);
-        update(user);
-        update(friend);
     }
 
     //получить список друзей пользователя

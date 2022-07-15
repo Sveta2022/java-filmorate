@@ -27,8 +27,8 @@ import java.util.Set;
 @RequestMapping("/films")
 public class FilmController {
 
-    FilmService filmService;
-    UserService userService;
+    private FilmService filmService;
+    private UserService userService;
 
     @Autowired
     public FilmController(FilmService filmService, UserService userService) {
@@ -89,10 +89,8 @@ public class FilmController {
 
     //получить список из 10-Топ фильмов
     @GetMapping("/popular")
-    public Set<Film> topTenFilm(@RequestParam(required = false) String count) {
+    public Set<Film> topFilm(@RequestParam(defaultValue = "10") int count) {
         log.info("Получен запрос на список популярных фильмов");
-        return filmService.topTenFilm(count);
+        return filmService.topFilm(count);
     }
-
-
 }

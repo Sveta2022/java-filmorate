@@ -34,7 +34,7 @@ public class Film {
     @Positive
     private int duration;
     // "один пользователь — один лайк". Массив хранит id пользователя
-    Set<Long> likes = new HashSet<>();
+    private Set<Long> likes = new HashSet<>();
 
     public int getCountLike() {
         return likes.size();

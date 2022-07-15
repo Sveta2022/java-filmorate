@@ -19,8 +19,8 @@ import java.util.*;
 @Slf4j
 @NoArgsConstructor
 public class FilmService {
-    FilmStorage filmStorage;
-    UserStorage userStorage;
+    private FilmStorage filmStorage;
+    private UserStorage userStorage;
     private long idgenerator;
 
     @Autowired
@@ -69,21 +69,21 @@ public class FilmService {
     }
 
     //получить список Топ-10 фильмов
-    public Set<Film> topTenFilm(String count) {
+    public Set<Film> topFilm(int count) {
         ArrayList<Film> films = filmStorage.getFilms();
         Set<Film> collect = new HashSet<>();
-        if (count == null) {
+//        if (count == null) {
+//            films.stream()
+//                    .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
+//                    .limit(10)
+//                    .forEach(collect::add);
+//
+//        } else {
             films.stream()
                     .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
-                    .limit(10)
+                    .limit(count)
                     .forEach(collect::add);
-
-        } else {
-            films.stream()
-                    .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
-                    .limit(Integer.parseInt(count))
-                    .forEach(collect::add);
-        }
+//        }
         return collect;
     }
 }

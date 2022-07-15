@@ -2,8 +2,8 @@ package ru.yandex.practicum.javafilmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.javafilmorate.exception.AllOtherException;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
@@ -17,25 +17,27 @@ import java.util.Map;
 @RestControllerAdvice(assignableTypes = {FilmController.class, UserController.class})
 @Slf4j
 public class ErrorHandler {
-
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidation(final ValidationException v) {
+    public ResponseEntity<Map<String, String>> handleValidation(final ValidationException v){
         log.warn(v.getMessage());
-        return Map.of("Validation is not correct ", v.getMessage());
+        return new ResponseEntity<>(
+                Map.of("Validation is not correct ", v.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleNotFound(final NotFoundObjectException n) {
+    public ResponseEntity<Map<String, String>> handleNotFound(final NotFoundObjectException n){
         log.warn(n.getMessage());
-        return Map.of("Object is not found ", n.getMessage());
+        return new ResponseEntity<>(
+                Map.of("Object is not found ", n.getMessage()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleAllOther(final AllOtherException a) {
+    public ResponseEntity<Map<String, String>> handleAllOther(final AllOtherException a){
         log.warn(a.getMessage());
-        return Map.of("Please, attention ", a.getMessage());
+        return new ResponseEntity<>(
+                Map.of("Please, attention ", a.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

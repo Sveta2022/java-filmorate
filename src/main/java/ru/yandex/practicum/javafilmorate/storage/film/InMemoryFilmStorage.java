@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 
 public class InMemoryFilmStorage implements FilmStorage {
-    Map<Long, Film> films = new HashMap<>();
+    private Map<Long, Film> films = new HashMap<>();
 
     @Override
     public Film create(Film film) {

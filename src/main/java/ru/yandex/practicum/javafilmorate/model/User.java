@@ -27,5 +27,5 @@ public class User {
     // дата рождения не может быть в будущем.
     private LocalDate birthday;
     // список друзей пользователя по их id
-    public Set<Long> friends = new HashSet<>();
+    private Set<Long> friends = new HashSet<>();
 }
