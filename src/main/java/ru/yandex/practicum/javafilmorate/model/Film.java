@@ -2,11 +2,14 @@ package ru.yandex.practicum.javafilmorate.model;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 //Класс описывает фильм
 
@@ -14,6 +17,8 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+
 public class Film {
 
     private long id;
@@ -28,5 +33,12 @@ public class Film {
     //продолжительность фильма должна быть положительной.
     @Positive
     private int duration;
+    // "один пользователь — один лайк". Массив хранит id пользователя
+    private Set<Long> likes = new HashSet<>();
+
+    public int getCountLike() {
+        return likes.size();
+    }
+
 
 }
