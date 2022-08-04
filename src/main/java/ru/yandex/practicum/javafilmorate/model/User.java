@@ -3,6 +3,7 @@ package ru.yandex.practicum.javafilmorate.model;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class User {
     //должен быть положительным
     private long id;
@@ -27,5 +27,7 @@ public class User {
     // дата рождения не может быть в будущем.
     private LocalDate birthday;
     // список друзей пользователя по их id
-    private Set<Long> friends = new HashSet<>();
+   // private Set<Long> friends = new HashSet<>();
+
+
 }

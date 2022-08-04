@@ -1,7 +1,8 @@
-package ru.yandex.practicum.javafilmorate.storage.user;
+package ru.yandex.practicum.javafilmorate.dao.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.javafilmorate.dao.UserStorage;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.User;
 

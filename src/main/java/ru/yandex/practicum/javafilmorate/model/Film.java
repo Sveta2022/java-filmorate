@@ -36,6 +36,21 @@ public class Film {
     // "один пользователь — один лайк". Массив хранит id пользователя
     private Set<Long> likes = new HashSet<>();
 
+    // private int genre_Id;
+   // private int rating_id;
+
+    public Film(long id, String name, String description, LocalDate releaseDate, int duration
+                //int genre_Id, int rating_id
+                ) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+    //    this.genre_Id = genre_Id;
+     //   this.rating_id = rating_id;
+    }
+
     public int getCountLike() {
         return likes.size();
     }

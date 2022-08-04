@@ -1,8 +1,9 @@
-package ru.yandex.practicum.javafilmorate.storage.user;
+package ru.yandex.practicum.javafilmorate.dao;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.model.User;
 
+import javax.annotation.Priority;
 import java.util.ArrayList;
 
 /*
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 - получить пользователя по id
  */
 
-@Component
+
 public interface UserStorage {
     //создать пользователя
     public User create(User user);

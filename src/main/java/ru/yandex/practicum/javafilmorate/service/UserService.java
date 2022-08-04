@@ -3,14 +3,13 @@ package ru.yandex.practicum.javafilmorate.service;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.javafilmorate.model.User;
-import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
+import ru.yandex.practicum.javafilmorate.dao.UserStorage;
 
 
 import java.util.*;
-
-import java.util.stream.Collectors;
 
 /*
 добавление в друзья, удаление из друзей, вывод списка общих друзей
@@ -19,17 +18,18 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor
 public class UserService {
-    private UserStorage userStorage;
-    private long idgenerator;
-
     @Autowired
+    private UserStorage userStorage;
+   // private long idgenerator;
+
+
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
     public User create(User user) {
-        ++idgenerator;
-        user.setId(idgenerator);
+      //  ++idgenerator;
+      //  user.setId(idgenerator);
         return userStorage.create(user);
     }
 
@@ -52,23 +52,23 @@ public class UserService {
     public void addFriends(long userId, long friendId) {
         User user = userStorage.getUserById(userId);
         User friend = userStorage.getUserById(friendId);
-        user.getFriends().add(friend.getId());
-        friend.getFriends().add(userId);
+     //   user.getFriends().add(friend.getId());
+     //   friend.getFriends().add(userId);
     }
 
     //удалить пользователя из друзей
     public void removeFriends(long userId, long friendId) {
         User user = userStorage.getUserById(userId);
         User friend = userStorage.getUserById(friendId);
-        user.getFriends().add(friend.getId());
-        friend.getFriends().add(userId);
+     //   user.getFriends().add(friend.getId());
+     //   friend.getFriends().add(userId);
     }
 
     //получить список друзей пользователя
     public List<User> userfriends(long id) {
         User user = getUserById(id);
         List<User> userFriends = new ArrayList<>();
-        user.getFriends().stream().forEach(e -> userFriends.add(getUserById(e)));
+      //  user.getFriends().stream().forEach(e -> userFriends.add(getUserById(e)));
         return userFriends;
     }
 
@@ -76,12 +76,12 @@ public class UserService {
     public List<User> commonFriends(long idUser, long idOther) {
         User user = userStorage.getUserById(idUser);
         User otherUser = userStorage.getUserById(idOther);
-        Set<Long> userFriends = user.getFriends();
-        Set<Long> otherFriends = otherUser.getFriends();
+      //  Set<Long> userFriends = user.getFriends();
+     //   Set<Long> otherFriends = otherUser.getFriends();
         List<User> commonUserFriends = new ArrayList<>();
-        userFriends.stream()
-                .filter(otherFriends::contains)
-                .forEach(e -> commonUserFriends.add(getUserById(e)));
+      //  userFriends.stream()
+        //        .filter(otherFriends::contains)
+       //         .forEach(e -> commonUserFriends.add(getUserById(e)));
         return commonUserFriends;
     }
 }

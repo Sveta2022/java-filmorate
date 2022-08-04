@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.model.User;
-import ru.yandex.practicum.javafilmorate.storage.film.FilmStorage;
-import ru.yandex.practicum.javafilmorate.storage.user.UserStorage;
+import ru.yandex.practicum.javafilmorate.dao.FilmStorage;
+import ru.yandex.practicum.javafilmorate.dao.UserStorage;
 
 import java.util.*;
 
@@ -21,7 +21,8 @@ import java.util.*;
 public class FilmService {
     private FilmStorage filmStorage;
     private UserStorage userStorage;
-    private long idgenerator;
+   // private long idgenerator;
+
 
     @Autowired
     public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
@@ -31,8 +32,8 @@ public class FilmService {
 
     //создать фильм
     public Film create(Film film) {
-        ++idgenerator;
-        film.setId(idgenerator);
+     //   ++idgenerator;
+    //    film.setId(idgenerator);
         return filmStorage.create(film);
     }
 

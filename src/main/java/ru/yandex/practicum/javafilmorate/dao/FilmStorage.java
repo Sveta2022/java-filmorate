@@ -1,5 +1,6 @@
-package ru.yandex.practicum.javafilmorate.storage.film;
+package ru.yandex.practicum.javafilmorate.dao;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.model.Film;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 - получить фильм по id
  */
 
-@Component
+
 public interface FilmStorage {
     //создать фильм
     Film create(Film film);
