@@ -1,5 +1,6 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +23,12 @@ import java.util.*;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 
 public class UserController {
-   private UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+   final private UserService userService;
 
     //создать пользователя;
     @PostMapping
@@ -100,16 +97,15 @@ public class UserController {
         String userEmail = user.getEmail();
         boolean mailFormat = userEmail.contains("@");
         if (userEmail.isEmpty() || !mailFormat) {
-            log.info("почта для пользователя " + user.getName() + " c id: " + user.getId() + " имеет ошибку");
             throw new ValidationException("электронная почта не может быть пустой и должна содержать символ @");
         }
         //логин не может быть пустым и содержать пробелы;
         String userLogin = user.getLogin();
         boolean loginFormat = userLogin.contains(" ");
         if (userLogin.isBlank() || loginFormat) {
-            log.info("логин имеет ошибку у пользователя " + user.getName() + " c id " + user.getId());
             throw new ValidationException("логин не может быть пустым и содержать пробелы");
         }
+
         //имя для отображения может быть пустым — в таком случае будет использован логин;
         String userName = user.getName();
         if (userName.isEmpty()) {

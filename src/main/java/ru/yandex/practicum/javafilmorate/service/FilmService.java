@@ -1,9 +1,11 @@
 package ru.yandex.practicum.javafilmorate.service;
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.javafilmorate.dao.impl.FilmDbStorage;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.dao.FilmStorage;
@@ -16,19 +18,13 @@ import java.util.*;
 фильмов по количеству лайков.
  */
 @Service
-@Slf4j
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class FilmService {
-    private FilmStorage filmStorage;
-    private UserStorage userStorage;
-   // private long idgenerator;
+    private final FilmStorage filmStorage;
+    private final UserStorage userStorage;
 
+    // private long idgenerator;
 
-    @Autowired
-    public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
-        this.filmStorage = filmStorage;
-        this.userStorage = userStorage;
-    }
 
     //создать фильм
     public Film create(Film film) {
@@ -57,7 +53,7 @@ public class FilmService {
     public void addLike(long filmId, long userId) {
         Film film = filmStorage.getFilmById(filmId);
         User user = userStorage.getUserById(userId);
-        film.getLikes().add(user.getId());
+      //  film.getLikes().add(user.getId());
         update(film);
     }
 
@@ -65,7 +61,7 @@ public class FilmService {
     public void deleteLike(long filmId, long userId) {
         Film film = filmStorage.getFilmById(filmId);
         User user = userStorage.getUserById(userId);
-        film.getLikes().remove(user.getId());
+       // film.getLikes().remove(user.getId());
         update(film);
     }
 
@@ -80,10 +76,10 @@ public class FilmService {
 //                    .forEach(collect::add);
 //
 //        } else {
-            films.stream()
-                    .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
-                    .limit(count)
-                    .forEach(collect::add);
+//            films.stream()
+//                    .sorted(Comparator.comparingInt(Film::getCountLike).reversed())
+//                    .limit(count)
+//                    .forEach(collect::add);
 //        }
         return collect;
     }

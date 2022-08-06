@@ -1,9 +1,9 @@
 package ru.yandex.practicum.javafilmorate.service;
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.javafilmorate.model.User;
 import ru.yandex.practicum.javafilmorate.dao.UserStorage;
@@ -16,16 +16,12 @@ import java.util.*;
  */
 @Service
 @Slf4j
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserStorage userStorage;
-   // private long idgenerator;
+    private final UserStorage userStorage;
 
-
-    public UserService(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
+    // private long idgenerator;
+    
 
     public User create(User user) {
       //  ++idgenerator;

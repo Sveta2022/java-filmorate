@@ -1,4 +1,5 @@
 package ru.yandex.practicum.javafilmorate.dao.impl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -20,14 +21,10 @@ import java.util.Optional;
 
 @Repository
 @Slf4j
+@RequiredArgsConstructor
 @Primary
 public class UserDbStorage implements UserStorage {
     private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public UserDbStorage(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     static User makeUser(ResultSet rs, int rowNum) throws SQLException {
         return new User(rs.getLong("ID"),
@@ -61,7 +58,16 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User update(User user) {
-        return null;
+        String sqlQuery = "update USERS set " +
+                "EMAIL = ?, NAME = ?, LOGIN = ?, BIRTHDAY = ?" +
+                "where ID = ?";
+        jdbcTemplate.update(sqlQuery
+                , user.getEmail()
+                , user.getName()
+                , user.getLogin()
+                , user.getBirthday()
+                , user.getId());
+        return user;
     }
 
     @Override

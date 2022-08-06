@@ -4,10 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Genre {
-    int id;
-    String name;
+    private final int id;
+    private final String name;
 }

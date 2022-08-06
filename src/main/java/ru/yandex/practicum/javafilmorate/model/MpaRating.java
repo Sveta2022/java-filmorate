@@ -1,13 +1,21 @@
 package ru.yandex.practicum.javafilmorate.model;
 
+import jdk.jshell.Snippet;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.NotBlank;
+
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
+@SuperBuilder
 @ToString
 public class MpaRating {
-    int id;
-    String name;
+    @NotBlank
+    private final int id;
+    @NotBlank
+    private final String name;
+
 }

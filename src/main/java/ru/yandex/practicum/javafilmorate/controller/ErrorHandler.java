@@ -14,12 +14,12 @@ import java.util.Map;
 /*
 Класс содержит методы обработки исключений
  */
-@RestControllerAdvice(assignableTypes = {FilmController.class, UserController.class})
+@RestControllerAdvice(assignableTypes = {FilmController.class, UserController.class, MpaController.class})
 @Slf4j
 public class ErrorHandler {
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleValidation(final ValidationException v){
-        log.warn(v.getMessage());
+        log.warn("400 {}", v.getMessage(),v);
         return new ResponseEntity<>(
                 Map.of("Validation is not correct ", v.getMessage()),
                 HttpStatus.BAD_REQUEST);
@@ -27,7 +27,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleNotFound(final NotFoundObjectException n){
-        log.warn(n.getMessage());
+        log.warn("404 {}", n.getMessage(), n);
         return new ResponseEntity<>(
                 Map.of("Object is not found ", n.getMessage()),
                 HttpStatus.NOT_FOUND);
@@ -35,7 +35,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleAllOther(final AllOtherException a){
-        log.warn(a.getMessage());
+        log.warn("500 {}", a.getMessage(), a);
         return new ResponseEntity<>(
                 Map.of("Please, attention ", a.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);

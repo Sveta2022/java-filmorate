@@ -1,5 +1,6 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +24,15 @@ import java.util.Set;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/films")
+
 public class FilmController {
 
-    private FilmService filmService;
-    private UserService userService;
+    final private FilmService filmService;
+    final private UserService userService;
 
-    @Autowired
-    public FilmController(FilmService filmService, UserService userService) {
-        this.filmService = filmService;
-        this.userService = userService;
-    }
 
     public void validateFilm(Film film) {
         // дата релиза — не раньше 28 декабря 1895 года;
