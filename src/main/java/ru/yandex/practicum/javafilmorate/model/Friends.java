@@ -1,15 +1,17 @@
 package ru.yandex.practicum.javafilmorate.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import ru.yandex.practicum.javafilmorate.model.User;
 
+//Класс описывает Объект дружбы между пользователями
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
+@SuperBuilder
 @ToString
 public class Friends {
-    User user;
-    User friends;
+    private Long id_users;
+    private Long id_friends;
 }

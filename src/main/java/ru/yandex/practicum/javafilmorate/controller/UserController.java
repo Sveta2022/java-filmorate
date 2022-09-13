@@ -2,7 +2,6 @@ package ru.yandex.practicum.javafilmorate.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
@@ -28,7 +27,7 @@ import java.util.*;
 @RequestMapping("/users")
 
 public class UserController {
-   final private UserService userService;
+    final private UserService userService;
 
     //создать пользователя;
     @PostMapping
@@ -43,7 +42,7 @@ public class UserController {
     public User update(@RequestBody @Valid User user) {
         log.info("Запрос на обновление пользователя " + user.getName() + " id " + user.getId() + " получен");
         long userId = user.getId();
-        if (userId < 0 && !userService.getAllUsers().contains(user)) {
+        if (userId < 0) {
             throw new NotFoundObjectException("Пользователя с id " + user.getId() + " нет");
         }
         validateUser(user);
@@ -52,9 +51,11 @@ public class UserController {
 
     //полученить список всех пользователей
     @GetMapping
-    public ArrayList<User> getAllUsers() {
+    public List<User> getAllUsers() {
         log.info("Получен запрос на получение списка всех пользователей");
-        return userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
+        log.info(String.valueOf(users.get(0)));
+        return users;
     }
 
     //получить пользователя по id
@@ -80,9 +81,9 @@ public class UserController {
 
     //вернуть список друзей пользователя с id
     @GetMapping("/{id}/friends")
-    public List<User> userFriend(@PathVariable long id) {
+    public Set<User> userFriend(@PathVariable long id) {
         log.info("Запрос: вернуть список друзей пользователя с id " + id);
-        return userService.userfriends(id);
+        return userService.userGetFriends(id);
     }
 
     //вернуть список общих друзей двух пользователей

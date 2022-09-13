@@ -1,14 +1,14 @@
 package ru.yandex.practicum.javafilmorate.dao;
 
-import ru.yandex.practicum.javafilmorate.model.Genre;
+import ru.yandex.practicum.javafilmorate.model.Genres;
 
-import java.util.Set;
+import java.util.List;
 
 public interface GenreStorage {
 
     //получить список MPA
-    Set<Genre> getGenre();
+    List<Genres> getAllGenre();
 
     //получить рейтинг по id
-    public Genre getGenreId(long id);
+    Genres getGenreId(int id);
 }

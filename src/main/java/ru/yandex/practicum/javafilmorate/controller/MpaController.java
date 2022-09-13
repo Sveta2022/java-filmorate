@@ -8,8 +8,8 @@ import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.MpaRating;
 import ru.yandex.practicum.javafilmorate.service.MpaService;
 
-import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -26,17 +26,15 @@ public class MpaController {
         log.info("Получен запрос на получение списка всех MPA");
         return mpaService.getAllMpas();
     }
+
     //    получить MPA по id
-        @GetMapping("/{id}")
-        public MpaRating getMpaById (@PathVariable int id) {
-            log.info("Получен запрос на поиск mpa с id: " + id);
-
-            if (mpaService.getMpaById(id).isEmpty()) {
-                throw new NotFoundObjectException("список не найден");
-            } else {
-                return mpaService.getMpaById(id).get(id - 1);
-
-            }
-
+    @GetMapping("/{id}")
+    public MpaRating getMpaById(@PathVariable int id) {
+        log.info("Получен запрос на поиск mpa с id: " + id);
+        Optional<MpaRating> mpa = Optional.of(mpaService.getMpaById(id).get(0));
+        if (mpa.isPresent()) {
+            return mpaService.getMpaById(id).get(0);
         }
+        throw new NotFoundObjectException("список MPA не найден");
+    }
 }

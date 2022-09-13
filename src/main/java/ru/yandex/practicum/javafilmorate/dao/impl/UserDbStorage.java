@@ -1,23 +1,22 @@
 package ru.yandex.practicum.javafilmorate.dao.impl;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.javafilmorate.dao.UserStorage;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.User;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Repository
 @Slf4j
@@ -71,22 +70,46 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public ArrayList<User> getAllUsers() {
-        final String sqlQuery = "SELECT ID, EMAIL, NAME, LOGIN FROM USERS " +
-                "WHERE ID = ?";
-        final ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query(sqlQuery, UserDbStorage::makeUser);
+    public List<User> getAllUsers() {
+        final String sqlQuery = "SELECT ID, EMAIL, NAME, LOGIN, BIRTHDAY FROM USERS";
+        final List<User> users = jdbcTemplate.query(sqlQuery, UserDbStorage::makeUser);
         return users;
 
     }
+
     @Override
     public User getUserById(long id) {
         final String sqlQuery = "SELECT ID, EMAIL, NAME, LOGIN, BIRTHDAY FROM USERS " +
                 "WHERE ID = ?";
         final List<User> users = jdbcTemplate.query(sqlQuery, UserDbStorage::makeUser, id);
-        if (users.size() != 1) {
-            return null;
+        if(users.size()!=1){
+            throw new NotFoundObjectException("Пользователя с id " + id + " нет в списке");
         }
         return users.get(0);
+    }
+
+    public Set<User> getAllFriends(long id) {
+        String sqlQuery = "SELECT ID, EMAIL, NAME, LOGIN, BIRTHDAY FROM FRIENDS F JOIN USERS U on U.ID = F.ID_FRIENDS " +
+                "WHERE ID_USERS = ?";
+        List<User> friends = jdbcTemplate.query(sqlQuery, UserDbStorage::makeUser, id);
+
+        return friends.stream().collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<User> commonFriends(long idUser, long idOther) {
+
+        String sqlQuery = "SELECT ID_FRIENDS FROM FRIENDS JOIN USERS U on U.ID = FRIENDS.ID_USERS WHERE ID_USERS = ?";
+
+        List<Long> userFriends = jdbcTemplate.queryForList(sqlQuery, Long.class, idUser);
+        List<Long> otherFriends = jdbcTemplate.queryForList(sqlQuery, Long.class, idOther);
+        List<Long> commonUserFriendsById = new ArrayList<>(userFriends);
+        commonUserFriendsById.retainAll(otherFriends);
+
+        return commonUserFriendsById
+                .stream()
+                .map(userId -> getUserById(userId))
+                .collect(Collectors.toList());
     }
 }
 

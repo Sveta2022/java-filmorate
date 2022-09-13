@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-//Класс описывает пользователя
+//Класс описывает объект пользователя
 
 @Getter
 @Setter
@@ -27,9 +27,4 @@ public class User {
     // дата рождения не может быть в будущем.
     private LocalDate birthday;
     // список друзей пользователя по их id
-   // private Set<Long> friends = new HashSet<>();
-
-
-//    @RequiredArgsConstructor
-//    final
 }

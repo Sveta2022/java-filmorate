@@ -1,18 +1,19 @@
 package ru.yandex.practicum.javafilmorate.model;
 
-import jdk.jshell.Snippet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
-//Класс описывает объект MPA рейтинг
 
+//Класс описывает объект жанр
 @Getter
 @Setter
-@RequiredArgsConstructor
-@SuperBuilder
+@AllArgsConstructor
 @ToString
-public class MpaRating {
+@SuperBuilder
+@EqualsAndHashCode(of = "id")
+
+public class Genres {
     @NotBlank
     private final int id;
     @NotBlank
