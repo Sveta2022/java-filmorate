@@ -1,7 +1,8 @@
 # java-filmorate
 Template repository for Filmorate project.
 
-![Untitled (3)](../../Desktop/Диаграмма.png)
+![Untitled (3)](https://user-images.githubusercontent.com/100937559/190260833-d04edb40-7e28-485a-ab9f-de2ad01ee5c2.png)
+
 
 
 
