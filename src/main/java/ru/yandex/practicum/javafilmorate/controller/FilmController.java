@@ -1,8 +1,10 @@
 package ru.yandex.practicum.javafilmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.exception.ValidationException;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.service.FilmService;
@@ -11,6 +13,7 @@ import ru.yandex.practicum.javafilmorate.service.UserService;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -23,18 +26,13 @@ import java.util.Set;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/films")
+
 public class FilmController {
 
-    private FilmService filmService;
-    private UserService userService;
-
-    @Autowired
-    public FilmController(FilmService filmService, UserService userService) {
-        this.filmService = filmService;
-        this.userService = userService;
-    }
+    final private FilmService filmService;
 
     public void validateFilm(Film film) {
         // дата релиза — не раньше 28 декабря 1895 года;
@@ -61,7 +59,7 @@ public class FilmController {
 
     //получение всех фильмов
     @GetMapping
-    ArrayList getFilms() {
+    List<Film> getFilms() {
         log.info("Получен запрос на получение списка всех фильмов");
         return filmService.getFilms();
     }
@@ -89,7 +87,7 @@ public class FilmController {
 
     //получить список из 10-Топ фильмов
     @GetMapping("/popular")
-    public Set<Film> topFilm(@RequestParam(defaultValue = "10") int count) {
+    public List<Film> topFilm(@RequestParam(defaultValue = "10") int count) {
         log.info("Получен запрос на список популярных фильмов");
         return filmService.topFilm(count);
     }

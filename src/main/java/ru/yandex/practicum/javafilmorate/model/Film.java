@@ -1,14 +1,15 @@
 package ru.yandex.practicum.javafilmorate.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.stereotype.Component;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 //Класс описывает фильм
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @ToString
 
 public class Film {
@@ -33,12 +35,10 @@ public class Film {
     //продолжительность фильма должна быть положительной.
     @Positive
     private int duration;
-    // "один пользователь — один лайк". Массив хранит id пользователя
-    private Set<Long> likes = new HashSet<>();
-
-    public int getCountLike() {
-        return likes.size();
-    }
-
-
+    //Эта оценка для фильма
+    private Integer rate = 0;
+    //Эта оценка определяет возрастное ограничение для фильма
+    private MpaRating mpa;
+    //У фильма может быть сразу несколько жанров, а у поля — несколько значений.
+    private Set<Genres> genres;
 }

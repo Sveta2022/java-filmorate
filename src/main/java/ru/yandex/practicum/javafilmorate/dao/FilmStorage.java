@@ -1,9 +1,12 @@
-package ru.yandex.practicum.javafilmorate.storage.film;
+package ru.yandex.practicum.javafilmorate.dao;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.javafilmorate.model.Film;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /*
 Интерфейс определяет методы:
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 - получить фильм по id
  */
 
-@Component
+
 public interface FilmStorage {
     //создать фильм
     Film create(Film film);
@@ -22,8 +25,17 @@ public interface FilmStorage {
     Film update(Film film);
 
     //получить список фильмов
-    ArrayList<Film> getFilms();
+    List<Film> getFilms();
 
     //получить фильм по id
     public Film getFilmById(long id);
+
+    //добавить лайк фильму
+    void addLike(long filmId, long userId);
+
+    //удалить лайк фильма
+    void deleteLike(long filmId, long userId);
+
+    //вывести топ популярных фильмов
+    List<Film> topFilm(int count);
 }
