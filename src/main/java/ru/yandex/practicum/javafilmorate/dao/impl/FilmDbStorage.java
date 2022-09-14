@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class FilmDbStorage implements FilmStorage {
 
     private final JdbcTemplate jdbcTemplate;
-    GenreDbStorage genreStorage;
 
     private Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
         Set<Genres> genres = new LinkedHashSet<>(getGenresByFilmID(rs.getLong("ID")));
