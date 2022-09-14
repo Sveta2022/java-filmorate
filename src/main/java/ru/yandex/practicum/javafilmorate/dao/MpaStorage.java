@@ -11,5 +11,5 @@ public interface MpaStorage {
     List<MpaRating> getMpas();
 
     //получить рейтинг по id
-    public List<MpaRating> getMpaRatingId(int id);
+    List<MpaRating> getMpaRatingId(int id);
 }

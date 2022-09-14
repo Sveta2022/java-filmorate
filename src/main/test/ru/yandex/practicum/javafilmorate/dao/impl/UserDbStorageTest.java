@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.javafilmorate.JavaFilmorateApplication;
+import ru.yandex.practicum.javafilmorate.dao.UserStorage;
 import ru.yandex.practicum.javafilmorate.dao.impl.UserDbStorage;
 import ru.yandex.practicum.javafilmorate.model.User;
 
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableAutoConfiguration
 class UserDbStorageTest extends JavaFilmorateApplication {
 
-  private final UserDbStorage userStorage;
+  private final UserStorage userStorage;
   Optional <User> user1 = Optional.of(new User(1L, "userEmail1", "userLogin1", "userName1",
           LocalDate.of(2015, 3, 31)));
     Optional <User> user2 = Optional.of(new User(2L, "userEmail2", "userLogin2", "userName2",

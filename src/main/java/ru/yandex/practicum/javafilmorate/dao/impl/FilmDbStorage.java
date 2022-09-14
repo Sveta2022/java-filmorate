@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.javafilmorate.dao.FilmStorage;
+import ru.yandex.practicum.javafilmorate.dao.GenreStorage;
 import ru.yandex.practicum.javafilmorate.exception.NotFoundObjectException;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.model.Genres;
@@ -17,6 +18,7 @@ import ru.yandex.practicum.javafilmorate.model.MpaRating;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
@@ -25,6 +27,7 @@ import java.util.*;
 public class FilmDbStorage implements FilmStorage {
 
     private final JdbcTemplate jdbcTemplate;
+    GenreDbStorage genreStorage;
 
     private Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
         Set<Genres> genres = new LinkedHashSet<>(getGenresByFilmID(rs.getLong("ID")));
@@ -84,13 +87,13 @@ public class FilmDbStorage implements FilmStorage {
         return film;
     }
 
-    public void deleteGenres(Film film) {
+    private void deleteGenres(Film film) {
         String sqlQuery = "DELETE from GENRESFORONEFILM WHERE ID_FILM = ?";
         Long id = film.getId();
         jdbcTemplate.update(sqlQuery, id);
     }
 
-    public void downLoadGenres(Film film) {
+    private void downLoadGenres(Film film) {
         Long id = film.getId();
         String sqlQuery = "INSERT INTO GENRESFORONEFILM (ID_FILM, ID_GENRES) values ( ?, ?)";
         if (film.getGenres() != null && film.getGenres().size() > 0) {
@@ -119,24 +122,14 @@ public class FilmDbStorage implements FilmStorage {
         if (films.size() != 1) {
             throw new NotFoundObjectException("Фильм с id " + id + " не найден");
         }
-
         return films.get(0);
     }
 
     public Set<Genres> getGenresByFilmID(Long filmId) {
-        final String sqlQuery = "SELECT ID_GENRES FROM GENRESFORONEFILM " +
+        final String sqlQuery = "SELECT G2.ID_GENRE, NAME FROM GENRESFORONEFILM GF JOIN GENRES G2 on G2.ID_GENRE = GF.ID_GENRES " +
                 "WHERE ID_FILM = ? ";
-        List<Integer> idGenres = jdbcTemplate.queryForList(sqlQuery, Integer.class, filmId);
-        Set<Genres> genres = new HashSet<>();
-        if (genres == null) {
-            return null;
-        }
-        final String queryGenre = "SELECT * FROM GENRES WHERE ID_GENRE = ?";
-        for (Integer idGenre : idGenres) {
-            Genres genre = jdbcTemplate.queryForObject(queryGenre, GenreDbStorage::makeGenre, idGenre);
-            genres.add(genre);
-        }
-        return genres;
+        List<Genres> genres = jdbcTemplate.query(sqlQuery, GenreDbStorage::makeGenre, filmId);
+        return new HashSet<>(genres);
     }
 
     @Override

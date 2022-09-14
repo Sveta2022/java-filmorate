@@ -88,6 +88,7 @@ public class UserDbStorage implements UserStorage {
         return users.get(0);
     }
 
+    @Override
     public Set<User> getAllFriends(long id) {
         String sqlQuery = "SELECT ID, EMAIL, NAME, LOGIN, BIRTHDAY FROM FRIENDS F JOIN USERS U on U.ID = F.ID_FRIENDS " +
                 "WHERE ID_USERS = ?";

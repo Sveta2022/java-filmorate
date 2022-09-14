@@ -17,7 +17,7 @@ import java.util.List;
 public class MpaDbStorage implements MpaStorage {
     private final JdbcTemplate jdbcTemplate;
 
-    static MpaRating makeMpa(ResultSet rs, int rowNum) throws SQLException {
+   private static MpaRating makeMpa(ResultSet rs, int rowNum) throws SQLException {
         return MpaRating.builder()
                 .id(rs.getInt("ID_MPA"))
                 .name(rs.getString("NAME"))

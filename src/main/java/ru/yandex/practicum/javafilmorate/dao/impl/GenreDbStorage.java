@@ -9,6 +9,7 @@ import ru.yandex.practicum.javafilmorate.model.Genres;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class GenreDbStorage implements GenreStorage {
 
     private final JdbcTemplate jdbcTemplate;
 
-    static Genres makeGenre(ResultSet rs, int rowNum) throws SQLException {
+    public static Genres makeGenre(ResultSet rs, int rowNum) throws SQLException {
         return Genres.builder()
                 .id(rs.getInt("ID_GENRE"))
                 .name(rs.getString("NAME"))

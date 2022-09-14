@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.javafilmorate.JavaFilmorateApplication;
+import ru.yandex.practicum.javafilmorate.dao.MpaStorage;
 import ru.yandex.practicum.javafilmorate.model.MpaRating;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableAutoConfiguration
 class MpaStorageTest extends JavaFilmorateApplication {
 
-    private final MpaDbStorage mpaStorage;
+    private final MpaStorage mpaStorage;
 
     @Test
     public void getMpaRatingId() {

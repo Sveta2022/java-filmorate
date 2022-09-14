@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.javafilmorate.JavaFilmorateApplication;
+import ru.yandex.practicum.javafilmorate.dao.FilmStorage;
+import ru.yandex.practicum.javafilmorate.dao.MpaStorage;
 import ru.yandex.practicum.javafilmorate.model.Film;
 import ru.yandex.practicum.javafilmorate.model.Genres;
 import ru.yandex.practicum.javafilmorate.model.MpaRating;
@@ -23,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableAutoConfiguration
 class FilmDbStorageTest extends JavaFilmorateApplication {
 
-   private final FilmDbStorage filmStorage;
-    private final MpaDbStorage mpa;
+   private final FilmStorage filmStorage;
+    private final MpaStorage mpa;
     Optional<Film>film1 = Optional.of(new Film(1, "film1", "description1",
             LocalDate.of(2002, 4, 15), 30, 2, new MpaRating(1, "GP"),
             Set.of(new Genres(1, "Драмма"), new Genres(2, "Коммедия"),
