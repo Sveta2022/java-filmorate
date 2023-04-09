@@ -1,9 +1,7 @@
 # java-filmorate
 Template repository for Filmorate project.
 
-![Схема базы Данных Приложения Filmorate]
-(https://github.com/Sveta2022/java-filmorate/blob/main/Схема%20базы%20данных.png
-
+<img src='https://github.com/Sveta2022/java-filmorate/blob/main/Схема%20базы%20данных.png'/>
 
 
 SELECT name, <br>
