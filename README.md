@@ -1,7 +1,7 @@
 # java-filmorate
 Template repository for Filmorate project.
 
-![Untitled (3)](../../Desktop/Диаграмма.png)
+![Схема базы Данных Приложения Filmorate](https://github.com/Sveta2022/java-filmorate/blob/main/Схема%20базы%20данных.png
 
 
 
