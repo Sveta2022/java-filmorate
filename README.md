@@ -1,18 +1,24 @@
-# java-filmorate
-Template repository for Filmorate project.
+Стэк: Java 11, H2, Maven, Lombok, Spring Boot.
 
-<img src='https://github.com/Sveta2022/java-filmorate/blob/main/Схема%20базы%20данных.png'/>
-
-Стэк: Java 11, H2, Maven, Lombok.
-Приложение JAVA-filmorate - API Приложение написанное по принципам REST. <br>
-В Приложение описаны сущности:  <br>
-Film, User, Genre, MpaRating
 
 Filmorate работает с фильмами и оценками пользователей,  <br>
 а также возвращает топ-5 фильмов, рекомендованных к просмотру.  <br>
  <br>
  <br>
+Приложение JAVA-filmorate - монолитное API REST,
+умеет:
+ - Принимать DTO в слой REST контроллера; <br>
+ - передавать данные в сервисный слой, где описана логика каждого эндпоинта;
+ - сохранять данный в базу H2;
+ - возвращать ответ или выбрасывать исключение. 
+
+В Приложение описаны сущности:  <br>
+Film, User, Genre, MpaRating
+
+Приложение протестировано JUnit
  
+<img src='https://github.com/Sveta2022/java-filmorate/blob/main/Схема%20базы%20данных.png'/>
+
 1. Получить пользователей  <br>
 SELECT name, <br>
 birthday <br>
